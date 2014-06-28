@@ -83,13 +83,14 @@ module.exports = function(grunt) {
         // Browser live reloading
         // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
         options: {
-          livereload: false
+          livereload: true
         },
         files: [
           'assets/css/main.min.css',
           'assets/js/scripts.min.js',
           'templates/*.php',
-          '*.php'
+          '*.php',
+          '*.less'
         ]
       }
     },
@@ -97,7 +98,51 @@ module.exports = function(grunt) {
       dist: [
         'assets/css/main.min.css',
         'assets/js/scripts.min.js'
-      ]
+      ],
+      all:{
+        src: ["theme", "theme.zip"]
+      }
+    },
+    copy:{
+      dist:{
+        files:[
+          {
+            src: [
+              '**',
+              '!*.md',
+              '!assets/less/bootstrap/**',
+              '!assets/less/font-awesome/**',
+              '!assets/js/plugins/**',
+              '!assets/js/_main.js',
+              '!assets/css/started/**',
+              '!node_modules/**',
+              '!Gruntfile.js',
+              '!package.json'
+            ],
+            dest:'theme/'
+          }
+        ]
+      },
+      deploy:{
+        files:[
+          {
+            src: ['theme.zip'],
+            dest:'../'
+          }
+        ]
+      }
+    },
+    compress:{
+      main:{
+        options: {
+          archive: "theme.zip"
+        },
+        files: [
+          {
+            src: "theme/**"
+          }
+        ]
+      }
     }
   });
 
